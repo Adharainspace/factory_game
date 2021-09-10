@@ -154,6 +154,7 @@
     <ClInclude Include="FontHolder.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Grass.cpp" />
+    <ClCompile Include="IronOre.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="SpriteHolder.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClInclude Include="IronOre.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rock.h" />
   </ItemGroup>

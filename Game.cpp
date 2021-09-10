@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "IronOre.h" // debug
+#include <iostream>
 
 Game::Game(int width, int height) :
 	name("factory game :]"),
@@ -69,6 +71,12 @@ void Game::main_loop()
 						this->camera.move(1, 0);
 					}
 					break;
+				case sf::Keyboard::Space:
+					// spawn item - debug purposes
+					int x = this->player->x;
+					int y = this->player->y;
+					std::shared_ptr<Object> ore = std::make_shared<IronOre>(x, y);
+					this->spawn_object(x, y, ore);
 				}
 				break;
 			}
@@ -144,7 +152,7 @@ bool Game::move_player(int x_mod, int y_mod)
 	int y = this->player->y;
 
 	//cant move into it
-	if (this->map.map_array[y + y_mod][x + x_mod]->density == true)
+	if (this->map.map_array[y + y_mod][x + x_mod]->check_density() == true)
 	{
 		return false;
 	}
@@ -155,4 +163,9 @@ bool Game::move_player(int x_mod, int y_mod)
 	this->player->y = y + y_mod;
 
 	return true;
+}
+
+void Game::spawn_object(int x, int y, std::shared_ptr<Object> object)
+{
+	this->map.map_array[y][x]->add_visible_contents(object);
 }

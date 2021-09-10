@@ -26,4 +26,6 @@ class SpriteHolder
 		sf::Texture load_texture(std::string file_path);
 		// returns a sprite in the spritesheet based on supplied index
 		sf::Sprite get_sprite(std::string name);
+		// returns a sprite index based on the sprite name supplied
+		int get_sprite_idx(std::string name);
 };

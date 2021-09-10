@@ -48,3 +48,21 @@ void Tile::remove_visible_contents(std::shared_ptr<Object> object)
 		}
 	}
 }
+
+bool Tile::check_density()
+{
+	// dense tile?
+	if (this->density == true)
+		return true;
+
+	// check tile contents
+	for (unsigned int i = 0; i < this->visible_contents.size(); i++)
+	{
+		std::shared_ptr<Object> candidate = this->visible_contents[i];
+		if (candidate->density == true)
+			return true;
+	}
+
+	// not dense
+	return false;
+}

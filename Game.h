@@ -39,6 +39,8 @@ class Game
 		void update_game();
 		// the current frame is drawn and displayed here
 		void render_game();
-		// lol
+		// moves the player object around on the map
 		bool move_player(int x_mod, int y_mod);
+		// places an object in the map at x, y
+		void spawn_object(int x, int y, std::shared_ptr<Object> object);
 };
