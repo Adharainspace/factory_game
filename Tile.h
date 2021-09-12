@@ -19,4 +19,5 @@ public:
 	virtual void add_visible_contents(std::shared_ptr<Object> object);
 	virtual void remove_visible_contents(std::shared_ptr<Object> object);
 	virtual bool check_density();
+	virtual std::shared_ptr<Object> find_object(std::string object_id);
 };

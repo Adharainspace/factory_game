@@ -5,11 +5,11 @@ Tile::Tile() :
 {}
 
 Tile::Tile(std::string sprite_name, int x, int y) :
-	Object::Object(sprite_name, x, y)
+	Object::Object(sprite_name, "tile", x, y)
 {}
 
 Tile::Tile(bool density, std::string sprite_name, int layer, int x, int y) :
-	Object::Object(density, sprite_name, layer, x, y)
+	Object::Object(density, sprite_name, "tile", layer, x, y)
 {}
 
 Tile::~Tile()
@@ -65,4 +65,17 @@ bool Tile::check_density()
 
 	// not dense
 	return false;
+}
+
+std::shared_ptr<Object> Tile::find_object(std::string object_id)
+{
+	for (unsigned int i = 0; i < this->visible_contents.size(); i++)
+	{
+		
+		if (this->visible_contents[i]->id == object_id)
+		{
+			return this->visible_contents[i];
+		}
+	}
+	return nullptr;
 }

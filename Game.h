@@ -3,6 +3,7 @@
 #include "Macros.h"
 #include "FontHolder.h"
 #include "SpriteHolder.h"
+#include "RecipeHolder.h"
 #include "Map.h"
 #include "Camera.h"
 #include "Player.h"
@@ -27,6 +28,8 @@ class Game
 		FontHolder font_holder;
 		// class which holds spritesheet data for use in drawing sprites
 		SpriteHolder sprite_holder;
+		// class which holds recipe data for crafting items in game
+		RecipeHolder recipe_holder;
 		// class which holds map data for game
 		Map map;
 		// object that is controlled by user input - the player

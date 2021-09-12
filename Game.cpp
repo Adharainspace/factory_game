@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "IronOre.h" // debug
+#include "IronIngot.h" // debug
 #include <iostream>
 
 Game::Game(int width, int height) :
@@ -10,6 +11,7 @@ Game::Game(int width, int height) :
 	window_height(height),
 	font_holder(),
 	sprite_holder(),
+	recipe_holder(),
 	map(),
 	player()
 {
@@ -72,11 +74,35 @@ void Game::main_loop()
 					}
 					break;
 				case sf::Keyboard::Space:
-					// spawn item - debug purposes
-					int x = this->player->x;
-					int y = this->player->y;
-					std::shared_ptr<Object> ore = std::make_shared<IronOre>(x, y);
-					this->spawn_object(x, y, ore);
+					{
+						// spawn item - debug purposes
+						int x = this->player->x;
+						int y = this->player->y;
+						std::shared_ptr<Object> ore = std::make_shared<IronOre>(x, y);
+						this->spawn_object(x, y, ore);
+						break;
+					}
+				case sf::Keyboard::C:
+					{
+						//craft item on tile - debug purposes
+						int x = this->player->x;
+						int y = this->player->y;
+						std::shared_ptr<Object> object;
+						object = this->map.map_array[y][x]->find_object("iron-ore");
+						if (object)
+						{
+							std::shared_ptr<Recipe> recipe = this->recipe_holder.recipe_list["iron-ingot"];
+							std::unordered_map<std::string, int> item_list;
+							item_list["iron-ore"] = 1;
+							if (recipe->check_requirements(recipe->input_items, item_list))
+							{
+								this->map.map_array[y][x]->remove_visible_contents(object);
+								std::shared_ptr<Object> ingot = std::make_shared<IronIngot>(x, y);
+								this->spawn_object(x, y, ingot);
+							}
+						}
+						break;
+					}
 				}
 				break;
 			}

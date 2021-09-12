@@ -1,14 +1,8 @@
 #pragma once
 
 #include "Macros.h"
-#include <unordered_map>
 
-/* 
-sprites are accessed on an index system.the first sprite is at 0, the 2nd is at 1. right to left, top to bottom
-0 1 2
-3 4 5
-6 7 8
-*/
+#include <unordered_map>
 
 class SpriteHolder
 {

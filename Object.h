@@ -2,7 +2,8 @@
 
 #include "Macros.h"
 
-class Object {
+class Object 
+{
 	protected:
 
 	public:
@@ -10,6 +11,8 @@ class Object {
 		bool density;
 		// the index in the spritesheet for the sprite of an object
 		std::string sprite_name;
+		// internal id representing the object
+		std::string id;
 		// the layer that an object is on - higher layers renders above lower layers, definitions in "Macros.h"
 		int layer;
 		// x coordinate on the map
@@ -22,7 +25,7 @@ class Object {
 		int pixel_y;
 		
 		Object();
-		Object(std::string sprite_name, int x, int y);
-		Object(bool density, std::string sprite_name, int layer, int x, int y);
+		Object(std::string sprite_name, std::string id, int x, int y);
+		Object(bool density, std::string sprite_name, std::string id, int layer, int x, int y);
 		virtual ~Object();
 };
