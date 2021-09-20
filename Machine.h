@@ -24,4 +24,5 @@ class Machine : public Object {
 		virtual void remove_contents(std::shared_ptr<Object> object);
 		virtual void add_visible_contents(std::shared_ptr<Object> object);
 		virtual void remove_visible_contents(std::shared_ptr<Object> object);
+		virtual void sort_visible_contents();
 };

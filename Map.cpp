@@ -44,6 +44,11 @@ bool Map::add_object(int x, int y, std::shared_ptr<Object> object)
 		tile->add_visible_contents(object);
 		object->x = tile->x;
 		object->y = tile->y;
+		// add conveyor pointer
+		if (object->id == "conveyor")
+		{
+			tile->conveyor_ptr = object;
+		}
 		return true;
 	}
 	// out of bounds

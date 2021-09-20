@@ -58,6 +58,7 @@ void Machine::remove_contents(std::shared_ptr<Object> object)
 void Machine::add_visible_contents(std::shared_ptr<Object> object)
 {
 	this->visible_contents.push_back(object);
+	this->sort_visible_contents();
 }
 
 void Machine::remove_visible_contents(std::shared_ptr<Object> object)
@@ -70,4 +71,10 @@ void Machine::remove_visible_contents(std::shared_ptr<Object> object)
 			this->visible_contents.erase(this->visible_contents.begin() + i);
 		}
 	}
+}
+
+void Machine::sort_visible_contents()
+{
+	std::sort(this->visible_contents.begin(), this->visible_contents.end(),
+		[](std::shared_ptr<Object> a, std::shared_ptr<Object> b) {return a->layer < b->layer; });
 }

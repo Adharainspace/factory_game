@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Macros.h"
-
 #include "Object.h"
+#include "Conveyor.h"
 #include <vector>
 #include <memory>
 
@@ -12,8 +12,8 @@ public:
 	std::vector<std::shared_ptr<Object>> contents;
 	// objects in the tile (these are rendered)
 	std::vector<std::shared_ptr<Object>> visible_contents;
-	// flag for if the tile has a conveyor belt. if its true, all additions go onto the conveyor and the conveyor contents are rendered with the tile
-	bool has_conveyor;
+	// pointer to a conveyor belt object. if it exists, all additions go onto the conveyor and the conveyor contents are rendered with the tile
+	std::shared_ptr<Object> conveyor_ptr;
 	// default constructor
 	Tile();
 	// im not commenting this
@@ -36,4 +36,6 @@ public:
 	virtual std::shared_ptr<Object> find_object(std::string object_id);
 	// finds the index of an object in the visual contents vector of the tile. returns the index to the first that matches, or -1 if none match.
 	virtual int find_object_idx(std::string object_id);
+	// sorts the visual contents vector by object layers
+	void sort_visible_contents();
 };

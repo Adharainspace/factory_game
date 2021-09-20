@@ -15,13 +15,21 @@ SpriteHolder::SpriteHolder()
 	this->index_map["robot-up"] = 6;
 	this->index_map["iron-ore"] = 7;
 	this->index_map["iron-ingot"] = 8;
+	// conveyor-west-east
 	this->index_map["conveyor-8-2"] = 9;
+	// conveyor-east-west
 	this->index_map["conveyor-2-8"] = 10;
+	// conveyor-north-south
 	this->index_map["conveyor-1-4"] = 11;
+	// conveyor-south-north
 	this->index_map["conveyor-4-1"] = 12;
+	// conveyor-north-east
 	this->index_map["conveyor-1-2"] = 13;
+	// conveyor-north-west
 	this->index_map["conveyor-1-8"] = 14;
+	// conveyor-south-east
 	this->index_map["conveyor-4-2"] = 15;
+	// conveyor-south-west
 	this->index_map["conveyor-4-8"] = 16;
 }
 

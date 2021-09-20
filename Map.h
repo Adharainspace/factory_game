@@ -3,6 +3,9 @@
 #include "boost/multi_array.hpp"
 #include "Tile.h"
 #include <memory>
+
+class Tile;
+
 typedef boost::multi_array<std::shared_ptr<Tile>, 2> MapArray;
 typedef MapArray::index MapIndex;
 

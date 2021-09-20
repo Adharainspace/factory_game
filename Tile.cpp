@@ -2,15 +2,27 @@
 
 Tile::Tile() : 
 	Object::Object()
-{}
+{
+	this->contents = std::vector<std::shared_ptr<Object>>();
+	this->visible_contents = std::vector<std::shared_ptr<Object>>();
+	this->conveyor_ptr = nullptr;
+}
 
 Tile::Tile(std::string sprite_name, int x, int y) :
 	Object::Object(sprite_name, "tile", x, y)
-{}
+{
+	this->contents = std::vector<std::shared_ptr<Object>>();
+	this->visible_contents = std::vector<std::shared_ptr<Object>>();
+	this->conveyor_ptr = nullptr;
+}
 
 Tile::Tile(bool density, std::string sprite_name, int layer, int x, int y) :
 	Object::Object(density, sprite_name, "tile", layer, x, y)
-{}
+{
+	this->contents = std::vector<std::shared_ptr<Object>>();
+	this->visible_contents = std::vector<std::shared_ptr<Object>>();
+	this->conveyor_ptr = nullptr;
+}
 
 Tile::~Tile()
 {}
@@ -34,7 +46,20 @@ void Tile::remove_contents(std::shared_ptr<Object> object)
 
 void Tile::add_visible_contents(std::shared_ptr<Object> object)
 {
-	this->visible_contents.push_back(object);
+	if (this->conveyor_ptr)
+	{
+		// cast object ptr to a conveyor pointer
+		Conveyor* raw_ptr = dynamic_cast<Conveyor*>(conveyor_ptr.get());
+		// add it to the fucken contents
+		raw_ptr->add_visible_contents(object);
+		object->x = raw_ptr->x;
+		object->y = raw_ptr->y;
+	}
+	else
+	{
+		this->visible_contents.push_back(object);
+	}
+	this->sort_visible_contents();
 }
 
 void Tile::remove_visible_contents(std::shared_ptr<Object> object)
@@ -91,4 +116,10 @@ int Tile::find_object_idx(std::string object_id)
 		}
 	}
 	return -1;
+}
+
+void Tile::sort_visible_contents()
+{
+	std::sort(this->visible_contents.begin(), this->visible_contents.end(),
+	[](std::shared_ptr<Object> a, std::shared_ptr<Object> b) {return a->layer < b->layer; });
 }
