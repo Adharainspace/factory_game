@@ -5,7 +5,7 @@ SpriteHolder::SpriteHolder()
 	this->spritesheet = this->load_texture("Data/Sprites/spritesheet.png");
 	this->sheet_length = (this->spritesheet.getSize().x);
 
-	// setting up sprite name : sprite index map
+	// setting up index map, sprite name : sprite index
 	this->index_map[""] = 0;
 	this->index_map["grass"] = 1;
 	this->index_map["rock"] = 2;
@@ -15,6 +15,14 @@ SpriteHolder::SpriteHolder()
 	this->index_map["robot-up"] = 6;
 	this->index_map["iron-ore"] = 7;
 	this->index_map["iron-ingot"] = 8;
+	this->index_map["conveyor-8-2"] = 9;
+	this->index_map["conveyor-2-8"] = 10;
+	this->index_map["conveyor-1-4"] = 11;
+	this->index_map["conveyor-4-1"] = 12;
+	this->index_map["conveyor-1-2"] = 13;
+	this->index_map["conveyor-1-8"] = 14;
+	this->index_map["conveyor-4-2"] = 15;
+	this->index_map["conveyor-4-8"] = 16;
 }
 
 sf::Texture SpriteHolder::load_texture(std::string file_path)
@@ -31,6 +39,12 @@ sf::Texture SpriteHolder::load_texture(std::string file_path)
 sf::Sprite SpriteHolder::get_sprite(std::string name)
 {
 	int index = this->index_map[name];
+	// invalid sprite
+	if (!index)
+	{
+		// return missing texture
+		return sf::Sprite(this->spritesheet, sf::IntRect(0, 0, SPRITE_SIZE, SPRITE_SIZE));
+	}
 	int x = (index % (this->sheet_length / SPRITE_SIZE)) * SPRITE_SIZE;
 	int y = (index / (this->sheet_length / SPRITE_SIZE)) * SPRITE_SIZE;
 	sf::Sprite sprite(this->spritesheet, sf::IntRect(x, y, SPRITE_SIZE, SPRITE_SIZE));

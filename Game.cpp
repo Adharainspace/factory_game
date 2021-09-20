@@ -24,89 +24,8 @@ void Game::main_loop()
 {
 	while (this->game_window.isOpen())
 	{
-		// event polling
-		while (this->game_window.pollEvent(event))
-		{
-			switch (event.type)
-			{
-				// window closed
-			case sf::Event::Closed:
-				this->game_window.close();
-				break;
-
-				// keyboard input
-			case sf::Event::KeyPressed:
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Escape:
-					this->game_window.close();
-					break;
-				case sf::Keyboard::W:
-					// move up
-					this->player->sprite_name = "robot-up";
-					if (this->move_player(0, -1))
-					{
-						this->camera.move(0, -1);
-					}
-					break;
-				case sf::Keyboard::A:
-					// move left
-					this->player->sprite_name = "robot-left";
-					if (this->move_player(-1, 0))
-					{
-						this->camera.move(-1, 0);
-					}
-					break;
-				case sf::Keyboard::S:
-					// move down
-					this->player->sprite_name = "robot-down";
-					if (this->move_player(0, 1))
-					{
-						this->camera.move(0, 1);
-					}
-					break;
-				case sf::Keyboard::D:
-					// move right
-					this->player->sprite_name = "robot-right";
-					if (this->move_player(1, 0))
-					{
-						this->camera.move(1, 0);
-					}
-					break;
-				case sf::Keyboard::Space:
-					{
-						// spawn item - debug purposes
-						int x = this->player->x;
-						int y = this->player->y;
-						std::shared_ptr<Object> ore = std::make_shared<IronOre>(x, y);
-						this->spawn_object(x, y, ore);
-						break;
-					}
-				case sf::Keyboard::C:
-					{
-						//craft item on tile - debug purposes
-						int x = this->player->x;
-						int y = this->player->y;
-						std::shared_ptr<Object> object;
-						object = this->map.map_array[y][x]->find_object("iron-ore");
-						if (object)
-						{
-							std::shared_ptr<Recipe> recipe = this->recipe_holder.recipe_list["iron-ingot"];
-							std::unordered_map<std::string, int> item_list;
-							item_list["iron-ore"] = 1;
-							if (recipe->check_requirements(recipe->input_items, item_list))
-							{
-								this->map.map_array[y][x]->remove_visible_contents(object);
-								std::shared_ptr<Object> ingot = std::make_shared<IronIngot>(x, y);
-								this->spawn_object(x, y, ingot);
-							}
-						}
-						break;
-					}
-				}
-				break;
-			}
-		}
+		// poll input
+		this->poll_input();
 
 		// update game
 		this->update_game();
@@ -116,8 +35,105 @@ void Game::main_loop()
 	}
 }
 
+void Game::poll_input()
+{
+	// event polling
+	while (this->game_window.pollEvent(event))
+	{
+		switch (event.type)
+		{
+			// window closed
+		case sf::Event::Closed:
+			this->game_window.close();
+			break;
+
+			// keyboard input
+		case sf::Event::KeyPressed:
+			switch (event.key.code)
+			{
+			case sf::Keyboard::Escape:
+				this->game_window.close();
+				break;
+			case sf::Keyboard::W:
+				// move up
+				this->player->sprite_name = "robot-up";
+				if (this->move_player(0, -1))
+				{
+					this->camera.move(0, -1);
+				}
+				break;
+			case sf::Keyboard::A:
+				// move left
+				this->player->sprite_name = "robot-left";
+				if (this->move_player(-1, 0))
+				{
+					this->camera.move(-1, 0);
+				}
+				break;
+			case sf::Keyboard::S:
+				// move down
+				this->player->sprite_name = "robot-down";
+				if (this->move_player(0, 1))
+				{
+					this->camera.move(0, 1);
+				}
+				break;
+			case sf::Keyboard::D:
+				// move right
+				this->player->sprite_name = "robot-right";
+				if (this->move_player(1, 0))
+				{
+					this->camera.move(1, 0);
+				}
+				break;
+			case sf::Keyboard::Space:
+			{
+				// spawn item - debug purposes
+				int x = this->player->x;
+				int y = this->player->y;
+				std::shared_ptr<Object> ore = std::make_shared<IronOre>(x, y);
+				this->map.add_object(x, y, ore);
+				break;
+			}
+			case sf::Keyboard::C:
+			{
+				//craft item on tile - debug purposes
+				int x = this->player->x;
+				int y = this->player->y;
+				std::shared_ptr<Object> object;
+				object = this->map.map_array[y][x]->find_object("iron-ore");
+				if (object)
+				{
+					std::shared_ptr<Recipe> recipe = this->recipe_holder.recipe_list["iron-ingot"];
+					std::unordered_map<std::string, int> item_list;
+					item_list["iron-ore"] = 1;
+					if (recipe->check_requirements(recipe->input_items, item_list))
+					{
+						this->map.map_array[y][x]->remove_visible_contents(object);
+						std::shared_ptr<Object> ingot = std::make_shared<IronIngot>(x, y);
+						this->map.add_object(x, y, ingot);
+					}
+				}
+				break;
+			}
+			case sf::Keyboard::V:
+			{
+				//spawn conveyor on tile - debug purposes
+			}
+			}
+			break;
+		}
+	}
+}
+
 void Game::update_game()
-{}
+{
+	// machine loop
+	for (std::shared_ptr<Machine> machine : this->machine_list)
+	{
+		machine->update_delay();
+	}
+}
 
 void Game::render_game()
 {
@@ -187,11 +203,5 @@ bool Game::move_player(int x_mod, int y_mod)
 	this->map.map_array[y + y_mod][x + x_mod]->add_visible_contents(this->player);
 	this->player->x = x + x_mod;
 	this->player->y = y + y_mod;
-
 	return true;
-}
-
-void Game::spawn_object(int x, int y, std::shared_ptr<Object> object)
-{
-	this->map.map_array[y][x]->add_visible_contents(object);
 }

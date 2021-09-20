@@ -7,6 +7,9 @@
 #include "Map.h"
 #include "Camera.h"
 #include "Player.h"
+#include "Machine.h"
+#include "Tile.h"
+#include <vector>
 
 class Game
 {
@@ -34,16 +37,18 @@ class Game
 		Map map;
 		// object that is controlled by user input - the player
 		std::shared_ptr<Player> player;
+		// vector which holds a shared pointer to a machine object, for all machines in the game
+		std::vector<std::shared_ptr<Machine>> machine_list;
 		// game class constructor
 		Game(int width, int height);
 		// the main backbone loop of the game, polls input, calls update game and renders game functions
 		void main_loop();
+		// input polling 
+		void poll_input();
 		// all non-graphical calculations for the game take place here
 		void update_game();
 		// the current frame is drawn and displayed here
 		void render_game();
 		// moves the player object around on the map
 		bool move_player(int x_mod, int y_mod);
-		// places an object in the map at x, y
-		void spawn_object(int x, int y, std::shared_ptr<Object> object);
 };

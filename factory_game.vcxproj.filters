@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Objects\Tiles">
       <UniqueIdentifier>{698c9789-0036-41c2-beaf-c32972db40d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects\Machines">
+      <UniqueIdentifier>{4a9d94d7-4c5c-408f-9c51-6f0427dfd580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Machines">
+      <UniqueIdentifier>{5cff129a-1e28-48e1-9a0c-2fa5a5f06cdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +81,12 @@
     <ClCompile Include="IronIngot.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Machine.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Conveyor.cpp">
+      <Filter>Source Files\Objects\Machines</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Macros.h">
@@ -121,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="IronIngot.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Machine.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Conveyor.h">
+      <Filter>Header Files\Objects\Machines</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

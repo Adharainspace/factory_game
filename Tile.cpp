@@ -56,11 +56,13 @@ bool Tile::check_density()
 		return true;
 
 	// check tile contents
-	for (unsigned int i = 0; i < this->visible_contents.size(); i++)
+	for (std::shared_ptr<Object> object : this->visible_contents)
 	{
-		std::shared_ptr<Object> candidate = this->visible_contents[i];
-		if (candidate->density == true)
+		if (object->density)
+		{
+			// dense
 			return true;
+		}
 	}
 
 	// not dense
@@ -69,13 +71,24 @@ bool Tile::check_density()
 
 std::shared_ptr<Object> Tile::find_object(std::string object_id)
 {
-	for (unsigned int i = 0; i < this->visible_contents.size(); i++)
+	for (std::shared_ptr<Object> object : this->visible_contents)
 	{
-		
-		if (this->visible_contents[i]->id == object_id)
+		if (object->id == object_id)
 		{
-			return this->visible_contents[i];
+			return object;
 		}
 	}
 	return nullptr;
+}
+
+int Tile::find_object_idx(std::string object_id)
+{
+	for (unsigned int i = 0; i < this->visible_contents.size(); i++)
+	{
+		if (this->visible_contents[i]->id == object_id)
+		{
+			return i;
+		}
+	}
+	return -1;
 }

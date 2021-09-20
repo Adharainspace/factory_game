@@ -146,16 +146,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Conveyor.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="FontHolder.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Conveyor.h" />
     <ClInclude Include="FontHolder.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="IronIngot.cpp" />
     <ClCompile Include="IronOre.cpp" />
+    <ClCompile Include="Machine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -167,6 +170,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClInclude Include="IronIngot.h" />
     <ClInclude Include="IronOre.h" />
+    <ClInclude Include="Machine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeHolder.h" />
